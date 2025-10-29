@@ -1,0 +1,11 @@
+# PDF Processing
+pdfplumber>=0.10.0
+
+# Claude API
+anthropic>=0.39.0
+
+# Data Handling
+pandas>=2.0.0
+
+# Utilities
+python-dotenv>=1.0.0

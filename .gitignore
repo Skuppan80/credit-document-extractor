@@ -205,3 +205,30 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+# Environment variables
+.env
+*.env
+
+# API Keys
+*_key.txt
+secrets/
+
+# Data files
+data/input/*.pdf
+data/output/*.json
+
+# Kaggle credentials
+kaggle.json
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+
+# Virtual environment
+venv/
+env/
