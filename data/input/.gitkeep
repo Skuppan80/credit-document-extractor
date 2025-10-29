@@ -1,0 +1,3 @@
+# This file ensures Git tracks this directory
+# Place your PDF files here for local testing
+# PDFs are gitignored and won't be committed
