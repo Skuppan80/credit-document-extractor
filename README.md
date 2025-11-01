@@ -195,3 +195,41 @@ Project Link: [https://github.com/YOUR_USERNAME/credit-document-extractor](https
 ---
 
 **⭐ If you find this project useful, please consider giving it a star!**
+
+## 🌐 Live Demo
+
+[Try the live app →](https://credit-document-extractor.streamlit.app) *(coming soon)*
+
+## 🚀 Deploy Your Own
+
+### Deploy to Streamlit Cloud (Free)
+
+1. Fork this repository
+2. Sign up at [share.streamlit.io](https://share.streamlit.io)
+3. Connect your GitHub account
+4. Select this repository
+5. Add your `ANTHROPIC_API_KEY` in Secrets
+6. Click Deploy!
+
+### Run Locally
+```bash
+git clone https://github.com/YOUR_USERNAME/credit-document-extractor.git
+cd credit-document-extractor
+pip install -r requirements.txt
+streamlit run streamlit_app.py
+```
+
+Enter your Anthropic API key in the sidebar to start extracting!
+
+---
+
+## 📸 Screenshots
+
+*Add screenshots of your app here*
+
+---
+
+## 🎥 Demo Video
+
+*Add demo video or GIF here*
+

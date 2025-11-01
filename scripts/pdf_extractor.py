@@ -1,74 +1,57 @@
 """
-PDF Text Extraction Module
-Extracts text and tables from credit documents
+PDF text extraction module
 """
 
 import pdfplumber
-from typing import Dict, List, Any
+from typing import Dict, Any
 
 class PDFExtractor:
-    """Extract text and tables from PDF documents"""
+    """Extract text from PDF files"""
     
-    def __init__(self):
-        self.current_file = None
-    
-    def extract_text(self, pdf_path: str) -> str:
+    def extract_all(self, pdf_path: str, max_pages: int = None) -> Dict[str, Any]:
         """
-        Extract all text from PDF
+        Extract text from PDF
         
         Args:
             pdf_path: Path to PDF file
+            max_pages: Optional limit on pages to process
             
         Returns:
-            Extracted text as string
+            Dictionary with text, pages_processed, total_pages, tables_found
         """
-        text = ""
-        
-        with pdfplumber.open(pdf_path) as pdf:
-            for page in pdf.pages:
-                page_text = page.extract_text()
-                if page_text:
-                    text += page_text + "\n"
-        
-        return text
-    
-    def extract_tables(self, pdf_path: str) -> List[List[List]]:
-        """
-        Extract all tables from PDF
-        
-        Args:
-            pdf_path: Path to PDF file
-            
-        Returns:
-            List of tables (each table is list of rows)
-        """
-        tables = []
-        
-        with pdfplumber.open(pdf_path) as pdf:
-            for page in pdf.pages:
-                page_tables = page.extract_tables()
-                if page_tables:
-                    tables.extend(page_tables)
-        
-        return tables
-    
-    def extract_all(self, pdf_path: str) -> Dict[str, Any]:
-        """
-        Extract text and tables
-        
-        Args:
-            pdf_path: Path to PDF file
-            
-        Returns:
-            Dictionary with text and tables
-        """
-        return {
-            'text': self.extract_text(pdf_path),
-            'tables': self.extract_tables(pdf_path),
-            'file_path': pdf_path
+        result = {
+            'text': '',
+            'pages_processed': 0,
+            'total_pages': 0,
+            'tables_found': 0
         }
+        
+        try:
+            with pdfplumber.open(pdf_path) as pdf:
+                result['total_pages'] = len(pdf.pages)
+                
+                # Determine pages to process
+                pages_to_process = pdf.pages[:max_pages] if max_pages else pdf.pages
+                
+                for page in pages_to_process:
+                    # Extract text
+                    page_text = page.extract_text()
+                    if page_text:
+                        result['text'] += page_text + "\n\n"
+                    
+                    # Count tables
+                    tables = page.extract_tables()
+                    if tables:
+                        result['tables_found'] += len(tables)
+                
+                result['pages_processed'] = len(pages_to_process)
+        
+        except Exception as e:
+            result['error'] = str(e)
+        
+        return result
 
 # For testing
 if __name__ == "__main__":
     extractor = PDFExtractor()
-    print("✅ PDF Extractor module loaded")
+    print("✅ PDFExtractor initialized")

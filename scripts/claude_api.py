@@ -1,54 +1,36 @@
-"""
-Claude API Integration Module
-Handles communication with Anthropic's Claude API
-"""
-
 import anthropic
+import json
+import re
 import os
-from typing import Optional
 
 class ClaudeAPI:
-    """Wrapper for Anthropic Claude API"""
-    
-    def __init__(self, api_key: Optional[str] = None):
-        """
-        Initialize Claude API client
-        
-        Args:
-            api_key: Anthropic API key (or uses ANTHROPIC_API_KEY env var)
-        """
-        self.api_key = api_key or os.environ.get('ANTHROPIC_API_KEY')
-        
+    def __init__(self, api_key=None):
+        self.api_key = api_key or os.getenv('ANTHROPIC_API_KEY')
         if not self.api_key:
-            raise ValueError("API key required. Set ANTHROPIC_API_KEY or pass api_key parameter.")
-        
+            raise ValueError("API key required")
         self.client = anthropic.Anthropic(api_key=self.api_key)
         self.model = "claude-sonnet-4-5-20250929"
     
-    def call_api(self, prompt: str, max_tokens: int = 4096) -> str:
-        """
-        Call Claude API with prompt
+    def extract_credit_terms(self, document_text, max_chars=100000):
+        if len(document_text) > max_chars:
+            document_text = document_text[:max_chars]
         
-        Args:
-            prompt: Text prompt to send
-            max_tokens: Maximum tokens in response
-            
-        Returns:
-            Claude's response as string
-        """
+        prompt = f"""Extract credit terms from this document as JSON:
+
+{document_text}
+
+Return JSON with: borrower, lender, loan_details, interest_terms, maturity."""
+        
         message = self.client.messages.create(
             model=self.model,
-            max_tokens=max_tokens,
-            messages=[
-                {
-                    "role": "user",
-                    "content": prompt
-                }
-            ]
+            max_tokens=4096,
+            temperature=0,
+            messages=[{"role": "user", "content": prompt}]
         )
         
-        return message.content[0].text
-
-# For testing
-if __name__ == "__main__":
-    print("✅ Claude API module loaded")
+        response_text = message.content[0].text
+        json_match = re.search(r'\{.*\}', response_text, re.DOTALL)
+        
+        if json_match:
+            return json.loads(json_match.group())
+        return {"error": "No JSON found"}
