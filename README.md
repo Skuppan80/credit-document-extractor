@@ -188,7 +188,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 📧 Contact
 
-Created by [Your Name] - [@your_github](https://github.com/YOUR_USERNAME)
+Created by [Saravanan Kuppan] - [Skuppan80](https://github.com/skuppan80)
 
 Project Link: [https://github.com/YOUR_USERNAME/credit-document-extractor](https://github.com/YOUR_USERNAME/credit-document-extractor)
 
@@ -213,7 +213,7 @@ Project Link: [https://github.com/YOUR_USERNAME/credit-document-extractor](https
 
 ### Run Locally
 ```bash
-git clone https://github.com/YOUR_USERNAME/credit-document-extractor.git
+git clone https://github.com/skuppan80/credit-document-extractor.git
 cd credit-document-extractor
 pip install -r requirements.txt
 streamlit run streamlit_app.py
