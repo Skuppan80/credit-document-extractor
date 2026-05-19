@@ -190,7 +190,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 Created by [Saravanan Kuppan] - [Skuppan80](https://github.com/skuppan80)
 
-Project Link: [https://github.com/YOUR_USERNAME/credit-document-extractor](https://github.com/skuppan80/credit-document-extractor)
+Project Link: [https://github.com/Skuppan80/credit-document-extractor](https://github.com/skuppan80/credit-document-extractor)
 
 ---
 
